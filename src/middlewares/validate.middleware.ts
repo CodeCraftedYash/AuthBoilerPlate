@@ -11,14 +11,16 @@ type RequestSchemas = {
   query?: ZodType;
 };
 // parseAsync throws an error while safeParseAsync returns an object both for pass and fail
-function validate(schema: RequestSchemas) {
+export default function validate(schema: RequestSchemas) {
   return async (req: Request, res: Response, next: NextFunction) => {
     if (schema.body) {
       const result = await schema.body.safeParseAsync(req.body);
       if (!result.success) {
         throw new ApiError(
           400,
-          result.error.issues.map((issue) => issue.message).join(", "),
+          result.error.issues
+            .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+            .join(", "),
         );
       }
       req.body = result.data;

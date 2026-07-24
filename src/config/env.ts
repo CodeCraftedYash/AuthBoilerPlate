@@ -12,7 +12,20 @@ const envSchema = z.object({
         "debug",
         "trace"
 ]),
-DATABASE_URL:z.string().min(1, "DATABASE_URL cannot be empty")
+DATABASE_URL:z.string().min(1, "DATABASE_URL cannot be empty"),
+ACCESS_TOKEN_SECRET:z.string().trim(),
+
+ACCESS_TOKEN_EXPIRES_IN:z.enum([
+  "15m",
+  "30m",
+  "1h",
+  "7d",
+]),
+REFRESH_TOKEN_SECRET: z.string().trim(),
+REFRESH_TOKEN_EXPIRES_IN: z.enum([
+  "7d",
+  "30d",
+]),
 })
 
 export const env = envSchema.parse(process.env);
