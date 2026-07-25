@@ -104,7 +104,6 @@ export class AuthService {
 
     return {
       user,
-      refreshToken,
       accessToken,
     };
   }
