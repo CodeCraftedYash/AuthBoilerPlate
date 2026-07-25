@@ -23,7 +23,7 @@ app.use(compression()); // compresses the response size to save bandwidth usage
 app.use(cookieparser()); //without this req.cookie results in undefined, it parses cookie to objects
 app.use(pinoHttp({logger})); // logs out 
 
-app.use(router); //root router
+app.use("/api",router); //root router
 
 app.use(notFound); //handles unkown endpoints
 app.use(errorHandler); //global error class
